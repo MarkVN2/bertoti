@@ -1,5 +1,6 @@
 package git.markvn2.models;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 

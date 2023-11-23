@@ -1,17 +1,13 @@
 package git.markvn2.models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class GameStop {
 
-    private List<Game> games;
-
-    public GameStop(){
-        games = new ArrayList<Game>();
-    }
-
+    private List<Game> games = new LinkedList<Game>();
     public void AddGame(Game game){
         games.add(game);
     }

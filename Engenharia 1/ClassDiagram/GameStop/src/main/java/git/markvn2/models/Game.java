@@ -7,6 +7,10 @@ public class Game {
         this.specs = specs;
         this.quantity = quantity;
     }
+    @Override
+    public String toString(){
+        return specs.getName();
+    }
     public GameSpecifics getSpecs() {
         return specs;
     }
