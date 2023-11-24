@@ -3,9 +3,6 @@
 
 >Create a class diagram and it's code
 
-This is a simple diagram that i created about GameStop.
+This is a simple class diagram exercise that i have completed using GameStop as the example.
 
-> [!NOTE]
-> The code is quite buggy and not the best some optimizations are required.
-
-[Diagram to be done :D]
+![gamestop](https://github.com/MarkVN2/bertoti/assets/105757405/4e1b5e32-6d77-432e-8e32-b36068f44d3f)
