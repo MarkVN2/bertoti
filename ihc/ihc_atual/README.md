@@ -23,4 +23,4 @@ When the card is flipped or unflipped theres a text indicating that the card can
 
 ![image](https://github.com/MarkVN2/bertoti/assets/105757405/72f75671-b775-41e9-90a5-3a16a48be5e0)
 
-The site presents some poor keyboard support, the cards do not flip until you click on a link that is on the other side of the card and the navegation can be confused since the links behind the card are selectable even without being visible.
+The site presents some poor keyboard support, the cards do not flip until you click on a link that is on the other side of the card and the navegation can be confusing since the links behind the card are selectable even without being visible.
