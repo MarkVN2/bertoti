@@ -1037,6 +1037,7 @@ allPokemons = [
 	"Pecharunt"
 ]
 
+
 def getPoke(poke):
     response = requests.get(f'https://pokeapi.co/api/v2/pokemon/{poke}')
     if response.status_code == 200:
@@ -1046,7 +1047,11 @@ def getPoke(poke):
 def getPokeHabitat(poke):
     response = requests.get(f'https://pokeapi.co/api/v2/pokemon-species/{poke}')
     if response.status_code == 200:
-        return response.json().get('habitat').get('name')
+        habit = response.json().get('habitat')
+        if(habit):
+          return habit.get('name')
+        else:
+          return "None"
     else:
         return None
 def getPokeColor(poke):
@@ -1055,6 +1060,7 @@ def getPokeColor(poke):
         return response.json().get('color').get('name')
     else:
         return None
+
 
 
 TOKEN = ''
@@ -1081,14 +1087,14 @@ def reply(message):
         bot.reply_to(message, "Hello i am a bot, i can help you with some information about Pokemons like stats, abilities, habitat and color just type in the name and what you want ")
         state = 2
     if (state == 2):
+        intent = classifier(user_msg, intentions)["labels"][0]
         reply = pr(context=user_msg, question=intent)
-
-         intent = classifier(user_msg, intentions)["labels"][0]
-         print(intent)
+        print(intent)
         if (intent == "search for stats in a pokemon"):
             words = (re.sub(r"'s", '', user_msg))
             print(words)
             words = (re.sub(r'[^A-Za-z0-9 ]+', '',words)).split()
+            lista = []
             print(words)
             for word in words:
                 if word.capitalize() in allPokemons:
@@ -1099,14 +1105,19 @@ def reply(message):
                         stat_name = stat['stat']['name'].capitalize()
                         base_stat = stat['base_stat']
                         stat_string += f"{stat_name}: {base_stat}\n"
+                        print(stat_string)
                     if poke_data is not None:
                         bot.reply_to(message, stat_string)
                         break
                     else:
                         bot.reply_to(message,"Sorry, i couldn't find that pokemon")
                 else:
-                  bot.reply_to(message,"Sorry, i couldn't find that pokemon")
-        elif (intent == "wants to know pokemon color"): 
+                    lista.append(word)
+                    print(len(lista), len(words))
+            if(len(lista) == len(words)): 
+                bot.reply_to(message,"Sorry, i couldn't find that pokemon")
+        elif(intent == "wants to know pokemon color"):
+            lista = []
             words = (re.sub(r"'s", '', user_msg))
             print(words)
             words = (re.sub(r'[^A-Za-z0-9 ]+', '',words)).split()
@@ -1118,27 +1129,35 @@ def reply(message):
                         bot.reply_to(message, f"The color of {word.capitalize()} is {poke_data.capitalize()}")
                         break
                     else:
-                        bot.reply_to(message,"Sorry, i couldn't find that pokemon")
+                        bot.reply_to(message,"Sorry, i couldn't find that pokemon")                   
                 else:
-                  bot.reply_to(message,"Sorry, i couldn't find that pokemon")
+                    lista.append(word)
+                    print(len(lista), len(words))
+            if(len(lista) == len(words)): 
+                bot.reply_to(message,"Sorry, i couldn't find that pokemon")
         elif(intent == "search for pokemon abilities"):
+            lista = []
             words = (re.sub(r"'s", '', user_msg))
             print(words)
             words = (re.sub(r'[^A-Za-z0-9 ]+', '',words)).split()
             print(words)
             for word in words:
-              if word.capitalize() in allPokemons:
-                poke_data = getPoke(word.lower())
-                abilities = poke_data['abilities']
-                abilities_string = f"Abilities for {word.capitalize()}:\n"
-                for ability in abilities:
-                    ability_name = ability['ability']['name'].capitalize()
-                    abilities_string += f"{ability_name}\n"
-                if poke_data is not None:
-                  bot.reply_to(message, abilities_string)
-              else:
+                if word.capitalize() in allPokemons:
+                    poke_data = getPoke(word.lower())
+                    abilities = poke_data['abilities']
+                    abilities_string = f"Abilities for {word.capitalize()}:\n"
+                    for ability in abilities:
+                        ability_name = ability['ability']['name'].capitalize()
+                        abilities_string += f"{ability_name}\n"
+                    if poke_data is not None:
+                        bot.reply_to(message, abilities_string)
+                else:
+                    lista.append(word)
+                    print(len(lista), len(words))
+            if(len(lista) == len(words)): 
                 bot.reply_to(message,"Sorry, i couldn't find that pokemon")
         elif(intent == "wants to know pokemon place of living"):
+            lista = []
             words = (re.sub(r"'s", '', user_msg))
             print(words)
             words = (re.sub(r'[^A-Za-z0-9 ]+', '',words)).split()
@@ -1152,5 +1171,8 @@ def reply(message):
                     else:
                         bot.reply_to(message,"Sorry, i couldn't find that pokemon")
                 else:
-                     bot.reply_to(message,"Sorry, i couldn't find that pokemon")
+                    lista.append(word)
+                    print(len(lista), len(words))
+            if(len(lista) == len(words)): 
+                bot.reply_to(message,"Sorry, i couldn't find that pokemon")
 bot.polling()
