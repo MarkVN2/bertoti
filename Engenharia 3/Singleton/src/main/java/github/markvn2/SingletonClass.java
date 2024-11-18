@@ -10,8 +10,11 @@ public class SingletonClass {
         }
         return instance;
     }
-    public void incrementValue(int val){
+    public void addValue(int val){
         value += val;
+    }
+    public void decreaseValue(int val){
+        value -= val;
     }
     public void showValue(){
         System.out.println("Singleton value: "+value);
